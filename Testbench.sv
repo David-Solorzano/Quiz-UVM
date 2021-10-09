@@ -13,7 +13,7 @@ module Testbench;
 
     reg clk;
 
-    if_dut _if;
+    if_dut _if(clk);
     
     // Generacion de reloj
     initial begin
