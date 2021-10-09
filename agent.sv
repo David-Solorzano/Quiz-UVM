@@ -88,7 +88,7 @@ class driver extends uvm_driver #(transaction_item);
         forever begin
             transaction_item item;
             seq_item_port.get_next_item(item);
-            driver_item(item)
+            driver_item(item);
 
         end
     endtask
