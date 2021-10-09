@@ -1,0 +1,21 @@
+Comando para correr: source command.sh
+
+Se implementó un ambiente con un agente, un scoreboard, un ambiente y un único test.
+
+El agente está compuesto del secuenciador, un driver y un monitor. El monitor genera un transacción en cada ciclo de reloj.
+
+Se implementaron 2 secuencias:
+-random_item_sequence: que genera un número aleatorio de entre 20 y 50 transacciones;
+-spec_item_sequence: que genera una secuencia de item en base a los que contenga su variable interna array. Permite enviar secuencias de tamaño variable.
+
+El scoreboard revisa cada transacción del monitor donde va guardando los valores anteriores y revisa si la secuencia actual debió generar un uno en la salida.
+
+Se encontró un error en la linea 14 del diseño en la que se le asignaba un valor fifo a la salida. Por lo que se corrigió antes de hacer la prueba para verificarlo correctamente.
+
+La prueba realizada consiste en 2 secuencias aleatorias, seguidas de las 3 secuencias pedidas en la evaluación y finalmente se termina con una secuencia aleatoria.
+
+En total se enviaron 144 transacciones, donde 139 coincidieron y 5 fallaron. En apariencia existe un bug relacionado con la secuencia 1010 ya que todos los misses involucraban esta secuencia y la salida en alto lo cual no era esperable. No fue posible confirmar este comportamiento por waveform porque al intentar correr el código en Verdi se queda automáticamente pegado en tiempo 0 por un wait dentro de un archivo de uvm del cual no se encontró la causa. Sin embargo, según lo observado en las trasacciones del monitor parece que sí es un comportamiento errático de la unidad bajo prueba.
+
+La prueba fue dejada en verbosidad baja para solo mostrar los errores y el reporte. Si se cambia por UMV_HIGH se imprimen todas las transacciones.
+ 
+Se cumplió con el principal objetivo de implementar el ambiente. 

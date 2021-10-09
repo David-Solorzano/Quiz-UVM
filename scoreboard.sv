@@ -29,16 +29,16 @@ class scoreboard extends uvm_scoreboard;
 
         if(t.out == (current_sequence==4'b1011)) begin
             n_matches++;
-            `uvm_info("SCOREBOARD", $sformatf("PASS Current Sequence = %b out = %b", current_sequence, t.out), UVM_MEDIUM)
+            `uvm_info("SCOREBOARD", $sformatf("\n\n##### MATCH Current Sequence = %b out = %b #####\n", current_sequence, t.out), UVM_HIGH)
         end
         else begin
             n_misses++;
-            `uvm_error("SCOREBOARD", $sformatf("PASS Current Sequence = %b out = %b", current_sequence, t.out))
+            `uvm_error("SCOREBOARD", $sformatf("\n\n##### MISS Current Sequence = %b out = %b #####\n", current_sequence, t.out))
         end
     endfunction
 
     virtual function void report_phase(uvm_phase phase);
     	super.report_phase(phase);
-        `uvm_info("SCOREBOARD", $sformatf("\n Matches = %d\n Misses = %d\n", n_matches, n_misses), UVM_FULL)
+        `uvm_info("SCOREBOARD REPORT", $sformatf("\n\n#####\n Matches = %d\n Misses = %d\n\#####\n\n", n_matches, n_misses), UVM_LOW)
     endfunction
 endclass

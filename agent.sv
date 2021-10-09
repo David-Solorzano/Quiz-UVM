@@ -9,6 +9,7 @@ class transaction_item extends uvm_sequence_item;
     `uvm_object_utils_begin(transaction_item)
         `uvm_field_int(rstn, UVM_DEFAULT)
         `uvm_field_int(in, UVM_DEFAULT)
+	`uvm_field_int(out, UVM_DEFAULT)
     `uvm_object_utils_end
 
     constraint c1 {rstn dist {0:=2, 1:=98};}
@@ -26,7 +27,7 @@ class random_item_sequence extends uvm_sequence;
 
     rand int num_items;
 
-    constraint total_items {9 < num_items; num_items < 30;}
+    constraint total_items {20 < num_items; num_items < 50;}
 
     function new(string name = "random_item_sequence");
         super.new(name);
@@ -37,11 +38,10 @@ class random_item_sequence extends uvm_sequence;
             transaction_item item = transaction_item::type_id::create("item");
             start_item(item);
             item.randomize();
-            `uvm_info("SEQ", $sformatf("New item:"), UVM_LOW)
-            item.print();
+            `uvm_info("SEQ", $sformatf("\nNew item: \n %s", item.sprint()), UVM_MEDIUM)
             finish_item(item);
         end
-        `uvm_info("SEQ", $sformatf("Done generating %d items", num_items), UVM_LOW)
+        `uvm_info("SEQ", $sformatf("Done generating %2d random items", num_items), UVM_LOW)
     endtask
 endclass
 
@@ -54,14 +54,13 @@ class spec_item_sequence extends uvm_sequence;
         super.new(name);
     endfunction
 
-    virtual task write_sequence(input bit array []);
+    virtual task body();
         foreach (array[i]) begin
             transaction_item item = transaction_item::type_id::create("item");
             start_item(item);
             item.in = array[i];
             item.rstn = 1;
-            `uvm_info("SEQ", $sformatf("New item:"), UVM_LOW)
-            item.print();
+            `uvm_info("SEQ", $sformatf("\nNew spec item: \n %s", item.sprint()), UVM_MEDIUM)
             finish_item(item);
         end
         
@@ -128,12 +127,11 @@ class monitor extends uvm_monitor;
         forever begin
             @(posedge vif.clk);
 
-            
             m_item.in = vif.in;
             m_item.rstn = vif.rstn;
             m_item.out = vif.out;
             monitor_aport.write(m_item);
-            `uvm_info("Monitor", $sformatf("Transaction created"), UVM_LOW)
+            `uvm_info("Monitor", $sformatf("\nTransaction created\n%s",m_item.sprint()), UVM_MEDIUM)
         end
     endtask
 endclass

@@ -34,11 +34,10 @@ module Testbench;
     initial begin
     uvm_top.enable_print_topology = 1;
 
-    uvm_top.set_report_verbosity_level(UVM_HIGH);
+    uvm_top.set_report_verbosity_level(UVM_LOW);
 
     uvm_config_db #(virtual if_dut)::set(null, "uvm_test_top", "_if", _if);
     run_test("test");
-    uvm_top.finish_on_completion  = 0;
     end
 
 

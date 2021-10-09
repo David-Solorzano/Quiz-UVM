@@ -22,17 +22,39 @@ class test extends uvm_test;
     virtual task run_phase(uvm_phase phase);
     
         random_item_sequence random_seq = random_item_sequence::type_id::create("random_seq");
+	spec_item_sequence spec_seq = spec_item_sequence::type_id::create("spec_seq");
+
     	super.run_phase(phase);
 
         phase.raise_objection(this);
         // Reset
         apply_reset();
-        #50;
+        #20;
         // Secuencia aleatoria
 
         random_seq.randomize();
         random_seq.start(e0.a0.sequencer_inst);
-        #50;
+        #20;
+
+	random_seq.randomize();
+	random_seq.start(e0.a0.sequencer_inst);
+	#20;
+
+	spec_seq.array = {0, 1, 1, 0, 1, 1, 0, 1, 0};
+	spec_seq.start(e0.a0.sequencer_inst);
+	#20;
+
+	spec_seq.array = {1, 0, 1, 0, 1, 1, 1, 0, 0};
+	spec_seq.start(e0.a0.sequencer_inst);
+	#20;
+
+	spec_seq.array = {1, 1, 1, 0, 1, 1, 0, 1, 1};
+	spec_seq.start(e0.a0.sequencer_inst);
+	#20;
+
+	random_seq.randomize();
+	random_seq.start(e0.a0.sequencer_inst);
+	#20
 
         phase.drop_objection(this);
     endtask
