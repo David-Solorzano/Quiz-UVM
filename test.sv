@@ -16,7 +16,7 @@ class test extends uvm_test;
         if(!uvm_config_db#(virtual if_dut)::get(this, "", "_if", vif))
             `uvm_fatal("Test", "Could not get vif")
 
-        uvm_config#(virtual if_dut)::get(this, "e0.a0.*", "_if", vif)
+        uvm_config_db#(virtual if_dut)::get(this, "e0.a0.*", "_if", vif)
     endfunction
 
     virtual task run_phase(uvm_phase phase);
