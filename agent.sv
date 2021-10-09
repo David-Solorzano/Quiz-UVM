@@ -124,11 +124,11 @@ class monitor extends uvm_monitor;
         forever begin
             @(posedge vif.clk);
 
-            transaction_item m_item = new;
-            item.in = vif.in;
-            item.rstn = vif.rstn;
-            item.out = vif.out;
-            monitor_aport.write(item);
+            transaction_item m_item = new();
+            m_item.in = vif.in;
+            m_item.rstn = vif.rstn;
+            m_item.out = vif.out;
+            monitor_aport.write(m_item);
             `uvm_info("Monitor", $sformatf("Transaction created"), UVM_LOW)
         end
     endtask
