@@ -6,10 +6,10 @@ class transaction_item extends uvm_sequence_item;
     rand bit in;
     bit out;
 
-    //`uvm_object_utils_begin(transaction_item)
-    //    `uvm_field_int(rstn, UVM_DEFAULT)
-    //    `uvm_field_int(in, UVM_DEFAULT)
-    //`uvm_object_utils_end
+    `uvm_object_utils_begin(transaction_item)
+        `uvm_field_int(rstn, UVM_DEFAULT)
+        `uvm_field_int(in, UVM_DEFAULT)
+    `uvm_object_utils_end
 
     constraint c1 {rstn dist {0:=2, 1:=98};}
 
