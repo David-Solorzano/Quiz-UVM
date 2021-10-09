@@ -102,7 +102,8 @@ endclass
 
 class monitor extends uvm_monitor;
     `uvm_component_utils(monitor)
-    uvm_analisys_port #(transaction_item) monitor_aport;
+
+    uvm_analysis_port #(transaction_item) monitor_aport;
     virtual if_dut vif;
 
     function new(string name = "monitor", uvm_component parent = null);
