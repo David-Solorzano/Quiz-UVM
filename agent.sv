@@ -102,13 +102,12 @@ endclass
 
 class monitor extends uvm_monitor;
     `uvm_component_utils(monitor)
+    uvm_analisys_port #(transaction_item) monitor_aport;
+    virtual if_dut vif;
 
     function new(string name = "monitor", uvm_component parent = null);
         super.new(name, parent);
     endfunction
-
-    uvm_analisys_port #(transaction_item) monitor_aport;
-    virtual if_dut vif;
 
     virtual function void build_phase(uvm_phase phase);
         super.build_phase(phase);
@@ -136,14 +135,15 @@ endclass
 
 class agent extends uvm_agent;
     `uvm_component_utils(agent)
+    
+    driver driver_inst;
+    monitor monitor_inst;
+    uvm_sequencer #(transaction_item) sequencer_inst;
 
     function new(string name = "agent", uvm_component parent = null);
         super.ner(name, parent);
     endfunction
 
-    driver driver_inst;
-    monitor monitor_inst;
-    uvm_sequencer #(transaction_item) sequencer_inst;
 
     virtual function void build_phase(uvm_phase phase);
         super.build_phase(phase);
