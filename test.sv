@@ -13,7 +13,7 @@ class test extends uvm_test;
     virtual function void build_phase(uvm_phase phase);
         super.build_phase(phase);
         e0 = env::type_id::create("e0", this);
-        if(!uvm_config#(virtual if_dut)::get(this, "", "_if", vif))
+        if(!uvm_config_db#(virtual if_dut)::get(this, "", "_if", vif))
             `uvm_fatal("Test", "Could not get vif")
 
         uvm_config#(virtual if_dut)::get(this, "e0.a0.*", "_if", vif)

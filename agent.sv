@@ -79,7 +79,7 @@ class driver extends uvm_driver #(transaction_item);
 
     virtual function build_phase(uvm_phase phase);
         super.build_phase(phase);
-        if(!uvm_config#(virtual if_dut)::get(this, "", "_if", vif))
+        if(!uvm_config_db#(virtual if_dut)::get(this, "", "_if", vif))
             `uvm_fatal("Driver", "Could not get vif")
     endfunction
 
@@ -112,7 +112,7 @@ class monitor extends uvm_monitor;
 
     virtual function void build_phase(uvm_phase phase);
         super.build_phase(phase);
-        if(!uvm_config#(virtual if_dut)::get(this, "", "_if", vif))
+        if(!uvm_config_db#(virtual if_dut)::get(this, "", "_if", vif))
             `uvm_fatal("Monitor", "Could not get vif")
 
         monitor_aport = new("monitor_aport", this);
