@@ -120,11 +120,12 @@ class monitor extends uvm_monitor;
 
     virtual task run_phase(uvm_phase phase);
         super.run_phase(phase);
+        transaction_item m_item = transaction_item::type_id::new("m_item", this);
 
         forever begin
             @(posedge vif.clk);
 
-            transaction_item m_item = new();
+            
             m_item.in = vif.in;
             m_item.rstn = vif.rstn;
             m_item.out = vif.out;
