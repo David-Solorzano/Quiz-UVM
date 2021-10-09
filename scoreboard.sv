@@ -11,7 +11,7 @@ class scoreboard extends uvm_scoreboard;
 
     virtual function void build_phase(uvm_phase phase);
         super.build_phase(phase);
-        m_analysis_imp = new("m_analysis_imp");
+        m_analysis_imp = new("m_analysis_imp", this);
     endfunction
 
     int n_misses = 0;
@@ -27,13 +27,13 @@ class scoreboard extends uvm_scoreboard;
             current_sequence[0] = t.in;
         end
 
-        if(out == (current_sequence==4'b1011)) begin
+        if(t.out == (current_sequence==4'b1011)) begin
             n_matches++;
-            `uvm_info("SCOREBOARD", $sformatf("PASS Current Sequence = %b out = %b", current_sequence, out), UVM_MEDIUM)
+            `uvm_info("SCOREBOARD", $sformatf("PASS Current Sequence = %b out = %b", current_sequence, t.out), UVM_MEDIUM)
         end
         else begin
             n_misses++;
-            `uvm_error("SCOREBOARD", $sformatf("PASS Current Sequence = %b out = %b", current_sequence, out))
+            `uvm_error("SCOREBOARD", $sformatf("PASS Current Sequence = %b out = %b", current_sequence, t.out))
         end
     endfunction
 

@@ -19,7 +19,7 @@ class env extends uvm_env;
 
     virtual function void connect_phase(uvm_phase phase);
         super.connect_phase(phase);
-        a0.monitor_inst.monitor_aport.connect(sb0.m_analysis_imp);
+        a0.monitor_inst.monitor_aport.connect(scbd0.m_analysis_imp);
     endfunction
 
 endclass

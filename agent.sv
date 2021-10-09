@@ -77,7 +77,7 @@ class driver extends uvm_driver #(transaction_item);
 
     virtual if_dut vif;
 
-    virtual function build_phase(uvm_phase phase);
+    virtual function void build_phase(uvm_phase phase);
         super.build_phase(phase);
         if(!uvm_config_db#(virtual if_dut)::get(this, "", "_if", vif))
             `uvm_fatal("Driver", "Could not get vif")
@@ -119,7 +119,7 @@ class monitor extends uvm_monitor;
     endfunction
 
     virtual task run_phase(uvm_phase phase);
-        transaction_item m_item = transaction_item::type_id::new("m_item", this);
+        transaction_item m_item = new;
 
         forever begin
             @(posedge vif.clk);
@@ -142,7 +142,7 @@ class agent extends uvm_agent;
     uvm_sequencer #(transaction_item) sequencer_inst;
 
     function new(string name = "agent", uvm_component parent = null);
-        super.ner(name, parent);
+        super.new(name, parent);
     endfunction
 
 
