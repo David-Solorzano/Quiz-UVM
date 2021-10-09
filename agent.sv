@@ -119,7 +119,6 @@ class monitor extends uvm_monitor;
     endfunction
 
     virtual task run_phase(uvm_phase phase);
-        super.run_phase(phase);
         transaction_item m_item = transaction_item::type_id::new("m_item", this);
 
         forever begin
