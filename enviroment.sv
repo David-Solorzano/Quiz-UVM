@@ -14,7 +14,7 @@ class env extends uvm_env;
     function void build_phase(uvm_phase phase);
         super.build_phase(phase);
         a0 = agent::type_id::create("a0", this);
-        scbd0 = scoreboard:type_id::create("scbd0", this);
+        scbd0 = scoreboard::type_id::create("scbd0", this);
     endfunction
 
     virtual function void connect_phase(uvm_phase phase);
