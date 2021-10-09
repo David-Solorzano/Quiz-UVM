@@ -28,7 +28,7 @@ class test extends uvm_test;
         // Secuencia aleatoria
 
         random_seq.randomize();
-        random_seq.start(e0.a0.sequencer_inst)
+        random_seq.start(e0.a0.sequencer_inst);
         #50;
 
         phase.drop_objection(this);
