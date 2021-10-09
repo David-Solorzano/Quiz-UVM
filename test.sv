@@ -20,7 +20,10 @@ class test extends uvm_test;
     endfunction
 
     virtual task run_phase(uvm_phase phase);
+    
         random_item_sequence random_seq = random_item_sequence::type_id::create("random_seq");
+    	super.run_phase(phase);
+
         phase.raise_objection(this);
         // Reset
         apply_reset();

@@ -20,6 +20,8 @@ module Testbench;
         clk = 0;
         forever #5 clk = ~clk;
     end
+
+    assign _if.clk = clk;
     
 
     det_1011 DUT(
@@ -32,7 +34,7 @@ module Testbench;
     initial begin
     uvm_top.enable_print_topology = 1;
 
-    uvm_top.set_report_verbosity_level(UVM_DEBUG);
+    uvm_top.set_report_verbosity_level(UVM_HIGH);
 
     uvm_config_db #(virtual if_dut)::set(null, "uvm_test_top", "_if", _if);
     run_test("test");

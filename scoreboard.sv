@@ -38,6 +38,7 @@ class scoreboard extends uvm_scoreboard;
     endfunction
 
     virtual function void report_phase(uvm_phase phase);
+    	super.report_phase(phase);
         `uvm_info("SCOREBOARD", $sformatf("\n Matches = %d\n Misses = %d\n", n_matches, n_misses), UVM_FULL)
     endfunction
 endclass

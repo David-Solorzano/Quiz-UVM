@@ -26,7 +26,7 @@ class random_item_sequence extends uvm_sequence;
 
     rand int num_items;
 
-    constraint total_items {0 < num_items; num_items < 30;}
+    constraint total_items {9 < num_items; num_items < 30;}
 
     function new(string name = "random_item_sequence");
         super.new(name);
@@ -89,6 +89,7 @@ class driver extends uvm_driver #(transaction_item);
             transaction_item item;
             seq_item_port.get_next_item(item);
             driver_item(item);
+	    seq_item_port.item_done();
 
         end
     endtask
@@ -119,7 +120,10 @@ class monitor extends uvm_monitor;
     endfunction
 
     virtual task run_phase(uvm_phase phase);
+
         transaction_item m_item = new;
+	
+    	super.run_phase(phase);
 
         forever begin
             @(posedge vif.clk);

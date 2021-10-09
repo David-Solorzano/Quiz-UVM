@@ -11,7 +11,7 @@ module det_1011 (input clk,
 
   reg[2:0] cur_state, next_state;
 
-  assign out = S1011 ? 1: 0; 
+  assign out = (cur_state == S101) ? 1: 0; 
 
   always@(posedge clk) begin
     if(!rstn) begin
