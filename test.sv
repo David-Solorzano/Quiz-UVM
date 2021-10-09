@@ -24,11 +24,12 @@ class test extends uvm_test;
 
         // Reset
         apply_reset();
-
+        #50;
         // Secuencia aleatoria
         random_item_sequence random_seq = random_item_sequence::type_id::create("random_seq");
         random_seq.randomize();
         random_seq.start(e0.a0.sequencer_inst)
+        #50;
 
         phase.drop_objection(this);
     endtask
