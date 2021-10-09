@@ -1,4 +1,4 @@
-import uvm_pck::*;
+import uvm_pkg::*;
 
 class env extends uvm_env;
 

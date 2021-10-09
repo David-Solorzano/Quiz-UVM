@@ -1,4 +1,4 @@
-
+import uvm_pkg::*;
 // Item de secuencia
 
 class transaction_item extends uvm_sequence_item;
@@ -6,10 +6,10 @@ class transaction_item extends uvm_sequence_item;
     rand bit in;
     bit out;
 
-    `uvm_object_utils_begin(transaction_item)
-        `uvm_field_int(rstn, UVM_DEFAULT)
-        `uvm_field_int(in, UVM_DEFAULT)
-    `uvm_object_utils_end
+    //`uvm_object_utils_begin(transaction_item)
+    //    `uvm_field_int(rstn, UVM_DEFAULT)
+    //    `uvm_field_int(in, UVM_DEFAULT)
+    //`uvm_object_utils_end
 
     constraint c1 {rstn dist {0:=2, 1:=98};}
 
@@ -21,14 +21,14 @@ endclass
 
 // Secuencias disponibles
 
-class random_item_sequence extends uvm_seq;
-    `uvm_object_utils(item_seq)
+class random_item_sequence extends uvm_sequence;
+    `uvm_object_utils(random_item_sequence)
 
     rand int num_items;
 
     constraint total_items {0 < num_items; num_items < 30;}
 
-    function new(string name = "item_seq");
+    function new(string name = "random_item_sequence");
         super.new(name);
     endfunction
 
@@ -45,12 +45,12 @@ class random_item_sequence extends uvm_seq;
     endtask
 endclass
 
-class spec_item_sequence extends uvm_seq;
-    `uvm_object_utils(item_seq)
+class spec_item_sequence extends uvm_sequence;
+    `uvm_object_utils(spec_item_sequence)
 
     bit array [];
 
-    function new(string name = "item_seq");
+    function new(string name = "spec_item_sequence");
         super.new(name);
     endfunction
 

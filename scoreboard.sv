@@ -1,4 +1,4 @@
-import uvm_pck::*;
+import uvm_pkg::*;
 
 class scoreboard extends uvm_scoreboard;
     `uvm_object_utils(scoreboard)

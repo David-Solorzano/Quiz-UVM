@@ -1,4 +1,4 @@
-interface if_dut (input clk);
+interface if_dut ();
     logic clk;
     logic rstn;
     logic in;

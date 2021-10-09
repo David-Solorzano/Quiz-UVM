@@ -1,4 +1,4 @@
-import uvm_pck::*;
+import uvm_pkg::*;
 
 `include "detector_secuencia.sv"
 `include "interface.sv"
