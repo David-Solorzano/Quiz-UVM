@@ -21,7 +21,7 @@ class transaction_item extends uvm_sequence_item;
 endclass
 
 // Secuencias disponibles
-
+// Secuancia de transacciones aleatorias
 class random_item_sequence extends uvm_sequence;
     `uvm_object_utils(random_item_sequence)
 
@@ -34,6 +34,7 @@ class random_item_sequence extends uvm_sequence;
     endfunction
 
     virtual task body();
+		// Entre 50 y 20 items aleatorios
         for(int i; i<num_items; i++) begin
             transaction_item item = transaction_item::type_id::create("item");
             start_item(item);
@@ -45,16 +46,19 @@ class random_item_sequence extends uvm_sequence;
     endtask
 endclass
 
+// Secuancia especifica
 class spec_item_sequence extends uvm_sequence;
     `uvm_object_utils(spec_item_sequence)
-
+	
+	// Arreglo de tamaño variable
     bit array [];
 
     function new(string name = "spec_item_sequence");
         super.new(name);
     endfunction
-
+	
     virtual task body();
+		// Se envia cada elemento del arreglo
         foreach (array[i]) begin
             transaction_item item = transaction_item::type_id::create("item");
             start_item(item);
@@ -67,6 +71,7 @@ class spec_item_sequence extends uvm_sequence;
     endtask
 endclass
 
+// Driver
 class driver extends uvm_driver #(transaction_item);
     `uvm_component_utils(driver)
 
@@ -81,7 +86,8 @@ class driver extends uvm_driver #(transaction_item);
         if(!uvm_config_db#(virtual if_dut)::get(this, "", "_if", vif))
             `uvm_fatal("Driver", "Could not get vif")
     endfunction
-
+	
+	// Cada transaccion que recibe
     virtual task run_phase(uvm_phase phase);
         super.run_phase(phase);
         forever begin
@@ -92,14 +98,17 @@ class driver extends uvm_driver #(transaction_item);
 
         end
     endtask
-
+	
+	// La señal en base al seq_item
     virtual task driver_item(transaction_item d_item);
         vif.in = d_item.in;
         vif.rstn = d_item.rstn;
+		// Se espera al reloj para sincronizacion
         @(posedge vif.clk);
     endtask
 endclass
 
+// Monitor
 class monitor extends uvm_monitor;
     `uvm_component_utils(monitor)
 
@@ -119,12 +128,13 @@ class monitor extends uvm_monitor;
     endfunction
 
     virtual task run_phase(uvm_phase phase);
-
+	
         transaction_item m_item = new;
 	
     	super.run_phase(phase);
 
         forever begin
+			// Cada flanco positivo se genera transaccion con datos actuales
             @(posedge vif.clk);
 
             m_item.in = vif.in;
@@ -136,6 +146,7 @@ class monitor extends uvm_monitor;
     endtask
 endclass
 
+// Agente
 class agent extends uvm_agent;
     `uvm_component_utils(agent)
     
@@ -150,9 +161,11 @@ class agent extends uvm_agent;
 
     virtual function void build_phase(uvm_phase phase);
         super.build_phase(phase);
-
+		//Driver
         driver_inst = driver::type_id::create("driver_inst", this);
+		//Monitor
         monitor_inst = monitor::type_id::create("monitor_inst", this);
+		//Secuenciador
         sequencer_inst = uvm_sequencer #(transaction_item)::type_id::create("sequencer_inst", this);
     endfunction
 

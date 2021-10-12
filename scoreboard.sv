@@ -6,7 +6,8 @@ class scoreboard extends uvm_scoreboard;
     function new(string name = "scoreboard", uvm_component parent = null);
         super.new(name, parent);
     endfunction
-
+	
+	// Puerto de transacciones del monitor
     uvm_analysis_imp #(transaction_item, scoreboard) m_analysis_imp;
 
     virtual function void build_phase(uvm_phase phase);
@@ -21,12 +22,15 @@ class scoreboard extends uvm_scoreboard;
 
     virtual function write(transaction_item t);
         if(!t.rstn) begin
+			// Si hay reset se reinicia la secuencia
             current_sequence = 4'b0;
         end else begin
+			// Sino se hace un shifth con el nuevo valor
             current_sequence = current_sequence << 1;
             current_sequence[0] = t.in;
         end
-
+		
+		// Comparaciíon entre los esperado y lo obtenido
         if(t.out == (current_sequence==4'b1011)) begin
             n_matches++;
             `uvm_info("SCOREBOARD", $sformatf("\n\n##### MATCH Current Sequence = %b out = %b #####\n", current_sequence, t.out), UVM_HIGH)
@@ -38,6 +42,7 @@ class scoreboard extends uvm_scoreboard;
     endfunction
 
     virtual function void report_phase(uvm_phase phase);
+		// Reporte de misses y matches al final de la corrida
     	super.report_phase(phase);
         `uvm_info("SCOREBOARD REPORT", $sformatf("\n\n#####\n Matches = %d\n Misses = %d\n\#####\n\n", n_matches, n_misses), UVM_LOW)
     endfunction

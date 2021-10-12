@@ -7,9 +7,12 @@ class env extends uvm_env;
     function new(string name = "env", uvm_component parent = null);
         super.new(name, parent);
     endfunction
-
+	
+	//Agente
     agent a0;
+	//Scoreboard
     scoreboard scbd0;
+	
 
     function void build_phase(uvm_phase phase);
         super.build_phase(phase);

@@ -1,3 +1,5 @@
+David Solórzano Pacheco - 2017094736
+
 Comando para correr: source command.sh
 
 Se implementó un ambiente con un agente, un scoreboard, un ambiente y un único test.
